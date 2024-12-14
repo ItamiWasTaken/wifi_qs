@@ -1,10 +1,9 @@
 name: Build & Publish Release
 
 on:
- #push:
-  #branches:
-   #- master
-   #- actions
+ push:
+  branches:
+   - release
  workflow_dispatch:
    
 jobs:
