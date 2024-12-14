@@ -19,18 +19,16 @@ jobs:
       with:
         distribution: "temurin"
         java-version: 17
-    - name: Make Gradle executable
-      run: chmod +x gradlew
-    - name: Build APK
-      run: ./gradlew app:assembleRelease
-    - name: Sign APK
-      run: java -jar uber-apk-signer.jar --apks app/build/outputs/apk/release --ks android.keystore --ksAlias key  --ksKeyPass "$KSP" --ksPass "$KSP" --out app/build/outputs/apk/release
-    - name: Rename APK
-      run: mv app/build/outputs/apk/release/app-release-aligned-signed.apk app/build/outputs/apk/release/WiFiQS.apk
-    - name: Increment version
+    - name: Building
       run: |
-        echo "VERSION="$(date +"%y%m%d%H")"" >> $GITHUB_ENV
-    - name: Releasing using Hub
+       chmod +x gradlew
+       ./gradlew app:assembleRelease
+    - name: Signing
+      run: |
+       java -jar uber-apk-signer.jar --apks app/build/outputs/apk/release --ks android.keystore --ksAlias key  --ksKeyPass "$KSP" --ksPass "$KSP" --out app/build/outputs/apk/release
+       mv app/build/outputs/apk/release/app-release-aligned-signed.apk app/build/outputs/apk/release/WiFiQS.apk
+       echo "VERSION="$(date +"%y%m%d%H")"" >> $GITHUB_ENV
+    - name: Releasing
       uses: marvinpinto/action-automatic-releases@latest
       with:
        repo_token: "${{ secrets.GITHUB_TOKEN }}"
