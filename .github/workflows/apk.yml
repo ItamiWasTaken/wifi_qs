@@ -1,7 +1,7 @@
 name: Build & Publish Release
 
 on:
- push:
+ #push:
   #branches:
    #- master
    #- actions
