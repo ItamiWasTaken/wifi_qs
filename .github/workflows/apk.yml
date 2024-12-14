@@ -1,14 +1,17 @@
-name: Build & Publish Debug APK
+name: Build & Publish Release
 
 on:
  push:
-  branches:
-   - master
-   - actions
+  #branches:
+   #- master
+   #- actions
+ workflow_dispatch:
    
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+        KSP: ${{ secrets.KSP }}
     steps:
     - uses: actions/checkout@v1
     - name: set up JDK 17
@@ -18,14 +21,21 @@ jobs:
         java-version: 17
     - name: Make Gradle executable
       run: chmod +x gradlew
-    - name: Build Debug APK
-      run: ./gradlew app:assembleDebug
+    - name: Build APK
+      run: ./gradlew app:assembleRelease
+    - name: Sign APK
+      run: java -jar uber-apk-signer.jar --apks app/build/outputs/apk/release --ks android.keystore --ksAlias key  --ksKeyPass "$KSP" --ksPass "$KSP" --out app/build/outputs/apk/release
+    - name: Rename APK
+      run: mv app/build/outputs/apk/release/app-release-aligned-signed.apk app/build/outputs/apk/release/WiFiQS.apk
+    - name: Increment version
+      run: |
+        echo "VERSION="$(date +"%y%m%d%H")"" >> $GITHUB_ENV
     - name: Releasing using Hub
       uses: marvinpinto/action-automatic-releases@latest
       with:
        repo_token: "${{ secrets.GITHUB_TOKEN }}"
        prerelease: false
-       automatic_release_tag: "latest"
-       title: "Auto build"
+       automatic_release_tag: "${{ env.VERSION }}"
+       title: "${{ env.VERSION }}"
        files: |
-         app/app/build/outputs/apk/debug/app-debug.apk
+         app/build/outputs/apk/release/WiFiQS.apk 
