@@ -9,11 +9,11 @@ android {
     defaultConfig {
         applicationId "n.eus.wifiqs"
         // Impossible to turn on or off Wi-Fi with target above 28
-        minSdkVersion 28
+        minSdkVersion 26
         //noinspection ExpiredTargetSdkVersion
-        targetSdkVersion 28
-        versionCode 2
-        versionName "1.1"
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
     }
 
     buildTypes {
