@@ -37,8 +37,10 @@ public class WifiTileService extends TileService implements WifiStateListener {
             case ENABLED:
                 tile.setIcon(Icon.createWithResource(this, R.drawable.enabled));
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    tile.setLabel(getString(R.string.wifi));
                     tile.setSubtitle(getString(R.string.disconnected));
                 } else {
+                    tile.setLabel(getString(R.string.wifi));
                     tile.setLabel(getString(R.string.disconnected));
                 }
                 tile.setState(Tile.STATE_ACTIVE);
