@@ -6,6 +6,6 @@
     <string name="add_to_qs_description">Add this tile into Quick Settings panel</string>
     <string name="add_to_qs_button">Add to quick tiles</string>
     <string name="off">Off</string>
-    <string name="disconnected">Disconnected</string>
+    <string name="disconnected">On</string>
     <string name="connected">Connected</string>
 </resources>
