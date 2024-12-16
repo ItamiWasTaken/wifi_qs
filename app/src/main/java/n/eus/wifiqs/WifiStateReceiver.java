@@ -21,7 +21,7 @@ public class WifiStateReceiver extends BroadcastReceiver {
         final WifiManager wifiMan = context.getSystemService(WifiManager.class);
         final boolean isEnabled = wifiMan.isWifiEnabled();
         if (!isEnabled) {
-            listener.onWifiStateChanged(WifiState.DISABLED, null, -1);
+            listener.onWifiStateChanged(WifiState.DISABLED, int, -1);
             return;
         }
         final WifiInfo wifiInfo = wifiMan.getConnectionInfo();
@@ -34,9 +34,9 @@ public class WifiStateReceiver extends BroadcastReceiver {
                 ssid = ssid.substring(1, ssid.length()-1);
             }
             final int rss = WifiManager.calculateSignalLevel(wifiInfo.getRssi(), 7);
-            listener.onWifiStateChanged(WifiState.CONNECTED, ssid, rss);
+            listener.onWifiStateChanged(WifiState.CONNECTED, int, rss);
         } else {
-            listener.onWifiStateChanged(WifiState.ENABLED, null, -1);
+            listener.onWifiStateChanged(WifiState.ENABLED, int, -1);
         }
     }
 
