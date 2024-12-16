@@ -50,7 +50,7 @@ public class WifiTileService extends TileService implements WifiStateListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     tile.setSubtitle(getString(R.string.connected));
                 } else {
-                    #tile.setLabel(getString(R.string.connected));
+                    tile.setLabel(getString(R.string.connected));
                 }
                 tile.setState(Tile.STATE_ACTIVE);
                 break;
